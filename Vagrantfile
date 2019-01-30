@@ -70,6 +70,7 @@ config.vm.box = "ubuntu/bionic64"
 
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "dev-machine-playbook.yml"
+    ansible.ask_vault_pass = true
 
   end
 end

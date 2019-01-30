@@ -3,3 +3,41 @@
   shell: ssh-keygen -t rsa -b 4096 -f ${HOME}/.ssh/id_rsa -C "" -N ""
   args:
     creates: ${HOME}/.ssh/id_rsa.pub
+
+- name: register ssh key
+  slurp:
+    src: ${HOME}/.ssh/id_rsa.pub
+  register: public_key
+
+- debug:
+    msg: "{{ public_key['content'] | b64decode }}"
+
+- name: username/host 
+  shell:  echo ${USER}@$(hostname)
+  register: user
+
+- debug:
+    msg: "{{ user }}"
+
+- name: Add machine sshkey to github
+  uri:
+    url: https://api.github.com/user/keys
+    method: POST
+    body_format: json
+    force_basic_auth: yes
+    user: mspiegel31
+    password: "{{github_pwd}}"
+    body: 
+        #TODO: get this from system 
+        title: "{{ user['stdout'] }}" 
+        key: "{{public_key['content'] | b64decode}}"
+    status_code: 201
+
+  vars:
+    github_pwd: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          32643162313835626139656432633264373835386661643234363035363735363666643231323733
+          6230636332333665613831626337333164633034646434370a626636666466323630363265333037
+          37396638613966633632366565343830336664626266363662383064333663333462623264353963
+          6334303036613832660a636361633037643433363164386464653362303431333362626635343537
+          3330
