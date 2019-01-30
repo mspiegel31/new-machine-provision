@@ -2,9 +2,15 @@
 - name: install vscode
   become: true
   command: snap install vscode --classic
+
 - name: install intellij-ce
   become: true
   command: snap install intellij-idea-community --classic
+
+- name: install google music client
+  become: true
+  command: snap install google-play-music-desktop-player
+
 - name: install guake
   become: true
   apt:

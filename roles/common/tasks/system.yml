@@ -1,17 +1,11 @@
 ---
-- name: install git
+# TODO: get debugging/install output
+- name: Install useful packages
   become: true
   apt:
-    name: git
-- name: install zsh
-  become: true
-  apt:
-    name: zsh
-
-# - name: Install a list of packages
-#   apt:
-#     name: "{{ packages }}"
-#   vars:
-#     packages:
-#     - foo
-#     - foo-tools
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - git
+    - zsh
+    - imwheel
