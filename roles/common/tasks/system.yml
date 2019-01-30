@@ -1,0 +1,15 @@
+---
+- name: install git
+  apt:
+    name: git
+- name: install zsh
+  apt:
+    name: zsh
+
+# - name: Install a list of packages
+#   apt:
+#     name: "{{ packages }}"
+#   vars:
+#     packages:
+#     - foo
+#     - foo-tools

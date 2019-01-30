@@ -1,0 +1,7 @@
+---
+- hosts: all
+  remote_user: root
+  tasks:
+    - import_tasks: roles/common/tasks/user_specific.yml
+    - import_tasks: roles/common/tasks/system.yml
+    - import_tasks: roles/common/tasks/applications.yml

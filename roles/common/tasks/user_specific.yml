@@ -1,0 +1,5 @@
+---
+- name: generate default ssh key for user
+  shell: ssh-keygen -t rsa -b 4096 -f ${HOME}/.ssh/id_rsa -C "" -N ""
+  args:
+    creates: ${HOME}/.ssh/id_rsa.pub
