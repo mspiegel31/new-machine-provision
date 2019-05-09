@@ -1,0 +1,19 @@
+- name: check for root .ssh dir
+  stat:
+    path: /root/.ssh
+  register: ssh_dir
+
+- name: copy .ssh directory
+  when: ssh_dir.stat.exists
+  copy:
+    remote_src: yes
+    src: /root/.ssh
+    dest: "/home/{{create_user}}"
+    mode: '0644'
+
+- name: else set local key as authorized for remote user
+  authorized_key:
+    user: "{{ create_user }}"
+    state: present
+    key: "{{ copy_local_key }}"
+  when: not ssh_dir.stat.exists
