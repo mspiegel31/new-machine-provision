@@ -48,6 +48,6 @@
     - import_tasks: register-with-git.yml
       when: public_ssh_key.stat.exists
 
-    - import_tasks: setup-dotfiles.yml
+    - import_tasks: configure-zsh.yml
   become: yes
   become_user: "{{ create_user }}" 

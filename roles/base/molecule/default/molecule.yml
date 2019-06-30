@@ -13,6 +13,8 @@ platforms:
     priveliged: True
 provisioner:
   name: ansible
+  playbooks:
+    cleanup: cleanup.yml
   lint:
     name: ansible-lint
 verifier:

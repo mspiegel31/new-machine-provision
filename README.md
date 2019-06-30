@@ -1,7 +1,7 @@
 # Machine provisioning
 
 # Prereqs
-1. use python 3.x
+1. use python 3.7
 1. install pipenv
 1. `pipenv install`
 1. `pipenv shell`
