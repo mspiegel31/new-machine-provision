@@ -1,0 +1,23 @@
+---
+# TODO: switch to using deploy keys for zsh config stuff?
+- name: register ssh key with github
+  block:
+    - name: Read SSH public key to authorize
+      shell: cat $HOME/.ssh/id_rsa.pub
+      register: ssh_pub_key
+
+    - name: username/host
+      become_user: mike
+      shell: echo ${USER}@$(hostname)
+      register: user
+  become_user: "{{create_user}}"
+  become: true
+
+- name: Authorize key with GitHub
+  local_action:
+    module: github_key
+    name: "{{ user.stdout }}"
+    pubkey: "{{ ssh_pub_key.stdout }}"
+    token: "{{git_token}}"
+  vars:
+    git_token: "{{lookup('bitwarden', 'ansible-github')}}"
