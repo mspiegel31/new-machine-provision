@@ -1,8 +1,6 @@
 ---
 dependency:
   name: galaxy
-  options:
-    role-file: molecule/default/requirements.yml
 driver:
   name: docker
 lint:
@@ -13,8 +11,6 @@ platforms:
     priveliged: True
 provisioner:
   name: ansible
-  playbooks:
-    cleanup: cleanup.yml
   lint:
     name: ansible-lint
 verifier:
