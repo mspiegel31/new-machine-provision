@@ -13,5 +13,6 @@ sys_packages: [
     'tree',
     'stow',
     'htop',
-    'mosh' 
+    'mosh',
+    'python3-pip'
     ]
