@@ -1,11 +1,7 @@
 ---
 # https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html
-- name: Update apt
-  apt: update_cache=yes
-
-# todo: use package for os-agnostic install
 - name: Install required system packages
-  apt: name={{ sys_packages }} state=latest
+  package: name={{ sys_packages }}
 
 - name: Make sure we have a 'wheel' group
   group:

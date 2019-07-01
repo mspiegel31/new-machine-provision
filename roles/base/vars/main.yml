@@ -3,7 +3,7 @@
 create_user: mike
 copy_local_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
 sys_packages: [
-    'build-essential',
+    # 'build-essential',
     'net-tools',
     'ufw',
     'openssh-server',
