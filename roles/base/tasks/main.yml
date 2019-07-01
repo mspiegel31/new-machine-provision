@@ -23,6 +23,7 @@
   user:
     name: "{{ create_user }}"
     groups: wheel
+    generate_ssh_key: yes
     shell: /bin/zsh
 
 - include_tasks: set-authorized-keys.yml
@@ -36,18 +37,6 @@
 
 - name: setup user keys and register with git
   block:
-    - openssh_keypair:
-        path: $HOME/.ssh/id_rsa
-    
-    - name: check for rsa keypair
-      stat:
-        path: $HOME/.ssh/id_rsa.pub
-      register: public_ssh_key
-
-    # todo: separate "register with git" role
-    - import_tasks: register-with-git.yml
-      when: public_ssh_key.stat.exists
-
-    - import_tasks: configure-zsh.yml
+    # - import_tasks: configure-zsh.yml
   become: yes
   become_user: "{{ create_user }}" 

@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: ansible-modules-bitwarden
+    - role: github-accessible
+      username: 'mike'
