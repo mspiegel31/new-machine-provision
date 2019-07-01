@@ -3,3 +3,4 @@
   hosts: all
   roles:
     - role: base
+      create_user: mike

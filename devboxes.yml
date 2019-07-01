@@ -4,4 +4,14 @@
   become: yes
   user: root
   roles:
-    - base
+    - ansible-modules-bitwarden #TODO: specify as dependency, specify in requirements.yml
+    - role: base
+      create_user: "{{user}}"
+    
+    - role: github-accessible
+      username: "{{ user }}"
+    
+    - role: zsh-configs
+      username: "{{ user }}"
+  vars:
+    user: mike

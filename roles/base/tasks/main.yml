@@ -1,5 +1,10 @@
 ---
 # https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html
+
+#TODO add when clause to check for os
+- name: update apt
+  apt: update_cache=yes
+
 - name: Install required system packages
   package: name={{ sys_packages }}
 
@@ -23,7 +28,27 @@
     generate_ssh_key: yes
     shell: /bin/zsh
 
-- include_tasks: set-authorized-keys.yml
+- name: check for root .ssh dirs
+  stat:
+    path: /root/.ssh
+  register: ssh_dir
+
+- name: copy root user .ssh directory
+  when: ssh_dir.stat.exists
+  synchronize:
+    src: /root/.ssh
+    dest: "/home/{{create_user}}"
+    rsync_opts:
+      - "--chown={{create_user}}:{{create_user}}"
+  delegate_to: "{{ inventory_hostname }}"
+
+
+- name: else set local key as authorized for remote user
+  authorized_key:
+    user: "{{ create_user }}"
+    state: present
+    key: "{{ copy_local_key }}"
+  when: not ssh_dir.stat.exists
 
 - name: Disable password authentication for root
   lineinfile:
@@ -31,7 +56,3 @@
     state: present
     regexp: '^PermitRootLogin'
     line: 'PermitRootLogin prohibit-password'
-
-# - import_tasks: configure-zsh.yml
-#   become: yes
-#   become_user: "{{ create_user }}" 
