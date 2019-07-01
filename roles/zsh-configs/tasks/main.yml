@@ -1,0 +1,71 @@
+---
+# tasks file for zsh-configs
+
+- name: prerequisites
+  block:
+  - name: install required packages
+    package: name="{{sys_packages}}" state=present
+
+  - name: Create a new regular user with sudo privileges
+    user:
+      name: "{{ username }}"
+      generate_ssh_key: yes
+      state: present
+
+  - name: perform ssh key setup
+    block:
+    - name: Read SSH public key to authorize
+      shell: cat $HOME/.ssh/id_rsa.pub
+      register: ssh_pub_key
+
+    - name: add github to known_hosts
+      shell: ssh-keyscan -H github.com >> $HOME/.ssh/known_hosts
+    
+    - name: create key name
+      shell: echo ${USER}@$(hostname)
+      register: keyname
+    
+    - name: setup deploy key for dotfiles
+      github_deploy_key:
+        name: "{{keyname.stdout}}"
+        owner: "mspiegel31"
+        repo: "dotfiles"
+        key: "{{ssh_pub_key.stdout}}"
+        token: "{{git_token}}"
+      vars:
+        git_token: "{{lookup('bitwarden', 'ansible-github')}}"
+
+    become: yes
+    become_user: "{{username}}"
+
+- name: setup oh-my-zsh
+  block:
+    - name: clone dotfiles repo
+      git:
+        repo: git@github.com:mspiegel31/dotfiles.git
+        dest: $HOME/dotfiles
+
+    - name: download install script
+      get_url:
+        url: https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
+        dest: $HOME/install.sh
+        mode: "a+x"
+
+    - name: install oh-my-zsh
+      shell: "$HOME/install.sh --unattended"
+      args:
+          creates: $HOME/.oh-my-zsh
+
+    - name: remove install script
+      file: path=$HOME/install.sh state=absent
+
+    - name: remove default .zshrc
+      file: path=$HOME/.zshrc state=absent
+
+    - name: use preferred zsh configuration
+      shell: stow zsh
+      args:
+        chdir: $HOME/dotfiles
+  become: yes
+  become_user: "{{username}}"
+  tags: oh-my-zsh

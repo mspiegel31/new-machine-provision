@@ -1,0 +1,8 @@
+---
+# vars file for zsh-configs
+sys_packages: [
+  openssh-client,
+  git,
+  zsh,
+  stow
+]

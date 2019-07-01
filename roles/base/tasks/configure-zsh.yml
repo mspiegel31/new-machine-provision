@@ -1,5 +1,4 @@
 ---
-# TODO: make separate "dotfiles/customization role"; depend on "register with git"
 # TODO: server should get deploy key
 - name: setup oh-my-zsh
   block:
