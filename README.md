@@ -15,6 +15,7 @@
 1. declare dependencies between roles?
 1. add content to base readme
 1. add notes to role readmes
+1. find way to aggregate dependencies from all roles
 
 ## Reference
 1. [ansible best practices](https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html#content-organization)
