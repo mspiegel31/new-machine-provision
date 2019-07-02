@@ -12,5 +12,14 @@
     
     - role: zsh-configs
       username: "{{ user }}"
+  
+  post_tasks:
+      #TODO:  check os here
+    - name: upgrade system
+      apt: upgrade=full
+    
+    - name: reboot server
+      reboot:
+
   vars:
     user: mike
