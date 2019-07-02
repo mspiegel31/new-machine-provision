@@ -5,6 +5,7 @@
   block:
   - name: install required packages
     package: name="{{sys_packages}}" state=present
+  
 
   - name: Create a new regular user with sudo privileges
     user:

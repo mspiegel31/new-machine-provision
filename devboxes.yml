@@ -4,7 +4,6 @@
   become: yes
   user: root
   roles:
-    - ansible-modules-bitwarden #TODO: specify as dependency, specify in requirements.yml
     - role: base
       create_user: "{{user}}"
     

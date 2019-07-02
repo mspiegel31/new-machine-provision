@@ -26,15 +26,17 @@
     - name: username/host
       become_user: "{{username}}"
       shell: echo ${USER}@$(hostname)
-      register: user
+      register: keyname
   become_user: "{{username}}"
   become: true
 
 - name: Authorize key with GitHub
   local_action:
     module: github_key
-    name: "{{ user.stdout }}"
+    name: "{{ keyname.stdout }}"
     pubkey: "{{ ssh_pub_key.stdout }}"
     token: "{{ git_token }}"
   vars:
     git_token: "{{lookup('bitwarden', 'ansible-github')}}"
+  become: no
+  become_method: sudo
