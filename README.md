@@ -16,6 +16,10 @@
 1. add content to base readme
 1. add notes to role readmes
 1. find way to aggregate dependencies from all roles
+1. add script for
+    1. install dependencies
+    2. checking for bw cli/unlocking bitwarden vault
+    
 
 ## Reference
 1. [ansible best practices](https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html#content-organization)
