@@ -5,6 +5,7 @@
   become_user: root
   roles:
     - role: base
+      tags: base
       create_user: "{{user}}"
     
     - role: github-accessible

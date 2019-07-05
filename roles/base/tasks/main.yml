@@ -1,9 +1,9 @@
 ---
 # https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html
 
-#TODO add when clause to check for os
 - name: update apt
   apt: update_cache=yes
+  when: ansible_facts['os_family'] == "Debian"
 
 - name: Install required system packages
   package: name={{ sys_packages }}
@@ -39,7 +39,7 @@
   synchronize:
     src: /root/.ssh
     dest: "/home/{{create_user}}"
-    rsync_opts:
+    rsync_opts:  
       - "--update"
       - "--chown={{create_user}}:{{create_user}}"
   delegate_to: "{{ inventory_hostname }}"
@@ -58,3 +58,10 @@
     state: present
     regexp: '^PermitRootLogin'
     line: 'PermitRootLogin prohibit-password'
+
+- name: Disable Password authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    state: present
+    regexp: '^PasswordAuthentication'
+    line: 'PasswordAuthentication no'
