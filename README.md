@@ -7,6 +7,10 @@
 1. `pipenv shell`
 1. install [bitwarden cli](https://github.com/bitwarden/cli)
 
+
+# Run playbook
+1. as default `mike` user
+    - `ansible-playbook -i production devboxes.yml -b -K --become-user=mike`
 ### notes:
 1. use inventories to separate dev vs server machines
 
