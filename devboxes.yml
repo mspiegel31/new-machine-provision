@@ -10,15 +10,17 @@
     
     - role: github-accessible
       username: "{{ user }}"
+      git_user: 'Mike Spiegel'
+      git_email: 'mspiegel31@gmail.com'
     
     - role: zsh-configs
       username: "{{ user }}"
   
   post_tasks:
-      #TODO:  check os here
     - name: upgrade system
       apt: upgrade=full
-    
+      when: ansible_facts['os_family'] == "Debian"
+
     - name: reboot server
       reboot:
 

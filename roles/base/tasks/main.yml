@@ -39,7 +39,7 @@
   synchronize:
     src: /root/.ssh
     dest: "/home/{{create_user}}"
-    rsync_opts:  
+    rsync_opts:
       - "--update"
       - "--chown={{create_user}}:{{create_user}}"
   delegate_to: "{{ inventory_hostname }}"

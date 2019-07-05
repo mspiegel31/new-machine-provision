@@ -1,8 +1,10 @@
 ---
 # tasks file for github-accessible
-# TODO: configure local git user
 - name: install openssh
   package: name=openssh-client state=present
+
+- name: install git
+  package: name=git state=present
 
 - name: Create a new regular user with sudo privileges
   user:
@@ -40,3 +42,15 @@
     git_token: "{{lookup('bitwarden', 'ansible-github')}}"
   become: no
   become_method: sudo
+
+- name: configure global git user
+  git_config:
+    name: user.name
+    scope: global
+    value: "{{git_user}}"
+
+- name: configure global git email
+  git_config:
+    name: user.email
+    scope: global
+    value: "{{git_email}}"
