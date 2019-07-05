@@ -1,6 +1,6 @@
 ---
 # tasks file for github-accessible
-
+# TODO: configure local git user
 - name: install openssh
   package: name=openssh-client state=present
 
