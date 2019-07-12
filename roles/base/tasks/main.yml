@@ -5,9 +5,15 @@
   apt: update_cache=yes
   when: ansible_facts['os_family'] == "Debian"
 
-- name: Install required system packages
-  package: name={{ sys_packages }}
+- name: Install deb system packages
+  package: name={{ deb_packages }}
   when: ansible_facts['os_family'] == "Debian"
+
+- name: Install system packages
+  package: name={{ sys_packages }}
+
+- name: install development packages
+  package: name={{development_packages}}
 
 - name: Make sure we have a 'wheel' group
   group:
