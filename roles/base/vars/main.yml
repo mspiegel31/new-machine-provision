@@ -1,17 +1,27 @@
 ---
 # vars file for base
-create_user: mike
 copy_local_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
 sys_packages: [
-    'build-essential',
     'net-tools',
+    
+    'fail2ban'
+]
+arch_packages: [
+    'sudo',
+    'openssh'
+]
+deb_packages: [
     'ufw',
     'openssh-server',
+    'python3-pip',
+]
+
+development_packages: [
     'git',
     'zsh',
     'imwheel',
     'tree',
     'stow',
     'htop',
-    'mosh' 
-    ]
+    'mosh',
+]

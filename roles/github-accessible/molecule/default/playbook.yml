@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  roles:
+    - role: ansible-modules-bitwarden
+    - role: github-accessible
+      username: 'mike'
+      git_user: 'Mike Spiegel'
+      git_email: 'mspiegel31@gmail.com'

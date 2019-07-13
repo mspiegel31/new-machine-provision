@@ -2,4 +2,4 @@
 dev.electricgarage.net
 
 [devboxes:vars]
-ansible_python_interpreter=/usr/bin/python3  
+ansible_python_interpreter=/usr/bin/python3

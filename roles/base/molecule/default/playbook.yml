@@ -1,6 +1,11 @@
 ---
 - name: Converge
   hosts: all
+  gather_facts: false
+  pre_tasks:
+    - name: install python if needed
+      raw: test -e /usr/bin/python || (pacman -Sy --noconfirm && pacman -S python --noconfirm)
+    - setup:
   roles:
     - role: base
-    - role: ansible-modules-bitwarden
+      create_user: mike

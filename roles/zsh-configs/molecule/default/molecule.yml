@@ -1,6 +1,8 @@
 ---
 dependency:
   name: galaxy
+  options:
+    role-file: molecule/default/requirements.yml
 driver:
   name: docker
 lint:
@@ -8,13 +10,9 @@ lint:
 platforms:
   - name: ubuntu
     image: ubuntu:18.04
-
-  - name: arch
-    image: archlinux/base
+    priveliged: True
 provisioner:
   name: ansible
-  lint:
-    name: ansible-lint
 verifier:
   name: testinfra
   lint:

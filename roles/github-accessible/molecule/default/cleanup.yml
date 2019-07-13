@@ -1,0 +1,24 @@
+# The cleanup step is executed directly before every destroy step. Just like the destroy step, it will be run twice. An initial clean before converge and then a clean before the last destroy step. This means that the cleanup playbook must handle failures to cleanup resources which have not been created yet.
+---
+# TODO: figure out how to set the user_name so that it can be shared between playbooks.  hardcoding for now.
+- name: cleanup
+  hosts: all
+  roles:
+    - role: ansible-modules-bitwarden
+  vars:
+    git_token: "{{lookup('bitwarden', 'ansible-github')}}"
+  
+  tasks:
+    - name: username/host
+      shell: echo ${USER}@$(hostname)
+      register: user
+      become_user: mike
+      become: true
+    
+    - name: remove test ssh key
+      local_action:
+        module: github_key
+        name: "{{ user.stdout }}"
+        token: "{{ git_token }}"
+        state: absent
+    

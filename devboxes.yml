@@ -2,6 +2,27 @@
 # reference https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html#directory-layout
 - hosts: devboxes
   become: yes
-  user: root
+  become_user: root
   roles:
-    - base
+    - role: base
+      tags: base
+      create_user: "{{user}}"
+    
+    - role: github-accessible
+      username: "{{ user }}"
+      git_user: 'Mike Spiegel'
+      git_email: 'mspiegel31@gmail.com'
+    
+    - role: zsh-configs
+      username: "{{ user }}"
+  
+  post_tasks:
+    - name: upgrade system
+      apt: upgrade=full
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: reboot server
+      reboot:
+
+  vars:
+    user: mike
