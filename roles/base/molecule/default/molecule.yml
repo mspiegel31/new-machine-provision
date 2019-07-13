@@ -8,7 +8,9 @@ lint:
 platforms:
   - name: ubuntu
     image: ubuntu:18.04
-    priveliged: True
+
+  - name: arch
+    image: archlinux/base
 provisioner:
   name: ansible
   lint:

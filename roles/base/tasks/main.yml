@@ -9,6 +9,10 @@
   package: name={{ deb_packages }}
   when: ansible_facts['os_family'] == "Debian"
 
+- name: install arch packages
+  package: name={{arch_packages}}
+  when: ansible_facts['os_family'] == 'Archlinux'
+
 - name: Install system packages
   package: name={{ sys_packages }}
 

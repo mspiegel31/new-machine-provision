@@ -3,14 +3,18 @@
 copy_local_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
 sys_packages: [
     'net-tools',
-    'openssh-server',
-    'python3-pip',
+    
     'fail2ban'
 ]
-arch_packages: []
+arch_packages: [
+    'sudo',
+    'openssh'
+]
 deb_packages: [
-        'ufw'
-    ]
+    'ufw',
+    'openssh-server',
+    'python3-pip',
+]
 
 development_packages: [
     'git',
