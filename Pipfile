@@ -7,7 +7,7 @@ verify_ssl = true
 ansible = ">=2.8.8"
 
 [requires]
-python_version = "3.8"
+python_version = "3.9"
 
 [dev-packages]
 molecule = "*"
