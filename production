@@ -1,5 +1,7 @@
 [devboxes]
-dev.electricgarage.net
+pine0.localdomain
+pine1.localdomain
+pine2.localdomain
 
 [devboxes:vars]
-ansible_python_interpreter=/usr/bin/python3
+ansible_python_interpreter=/usr/bin/python3 
